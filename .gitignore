@@ -1,0 +1,15 @@
+# Node.js dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Logs
+*.log
+
+.early.coverage/
+.env/
+
+# Parcel cache
+.parcel-cache/
