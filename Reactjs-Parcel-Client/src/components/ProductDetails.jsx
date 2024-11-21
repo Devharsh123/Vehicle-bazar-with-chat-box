@@ -1,10 +1,33 @@
 import { useParams } from "react-router-dom";
 import useVehicleDetails from "../utils/useVehicleDetail";
 import { Link } from "react-router-dom";
+import { useLoadUsers } from "../utils/useLoadUsers";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const productDetails = useVehicleDetails(id);
+
+  const { token, data } = useLoadUsers();
+
+  const handleAddToCart = async (id) => {
+    const res = await fetch(`http://localhost:3000/cart/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    });
+    const json = await res.json();
+    console.log(json, "json");
+    if (json)
+      if (json) {
+        alertFunction();
+      }
+    function alertFunction() {
+      alert("Product added to cart");
+    }
+  };
+
   console.log(productDetails, "prodDetails");
   return (
     <div>
@@ -229,16 +252,29 @@ const ProductDetails = () => {
                 </ul>
 
                 <div class="flex py-8">
-                  <button class="group mr-6 py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-100">
-                    <Link
-                      to={`/chat/${productDetails.u_id}?productId=${productDetails._id}`}
-                    >
-                      💬 Chat Box
-                    </Link>
-                  </button>
-                  <button class="group py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-100">
-                    🛒 Add to cart
-                  </button>
+                  {productDetails.u_id === data.id && data.role === "VENDOR" ? (
+                    <>
+                      <button class="group mr-6 py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-100">
+                        <Link to={`/edit/${productDetails._id}`}>🖊️ Edit</Link>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button class="group mr-6 py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-100">
+                        <Link to={`/edit/${productDetails._id}`}>
+                          💬 Chat Box
+                        </Link>
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleAddToCart(productDetails._id);
+                        }}
+                        class="group py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-100"
+                      >
+                        🛒 Add to cart
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

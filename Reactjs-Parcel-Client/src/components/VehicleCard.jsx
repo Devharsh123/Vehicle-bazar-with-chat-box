@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useLoadUsers } from "../utils/useLoadUsers";
 
 const VehicleCard = (props) => {
   const {
@@ -12,35 +11,16 @@ const VehicleCard = (props) => {
     pricePerDay,
   } = props.vehicleDetail;
 
-  const { token } = useLoadUsers();
-
-  const handleAddToCart = async (id) => {
-    const res = await fetch(`http://localhost:3000/cart/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-    });
-    const json = await res.json();
-    if (json) {
-      alertFunction();
-    }
-    function alertFunction() {
-      alert("Product added to cart");
-    }
-  };
-
   return props.vehicleDetail ? (
     <Link
       to={"/product-profile/" + _id}
       class="hover: cursor-pointer group border-2 border-blue-500 p-4 rounded-lg hover:bg-gradient-to-r from-cyan-300 to-blue-400"
     >
-      <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+      <div class="h-40 w-auto overflow-hidden rounded-lg  flex items-center justify-center">
         <img
           src={imageUrl}
           alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
-          class="h-full w-full object-cover object-center "
+          class="h-full w-full object-fill"
         />
       </div>
       <h3 class="mt-4 text-sm text-gray-700 font-medium">Brand: {brand}</h3>
@@ -54,14 +34,20 @@ const VehicleCard = (props) => {
       <p class="mt-1 text-sm text-gray-700 font-medium">
         Mode of transmission: {transactionType}
       </p>
-      <button
-        onClick={() => {
-          handleAddToCart(_id);
-        }}
-        class="flex w-full justify-center rounded-md bg-indigo-600 my-2 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        Add To Cart
-      </button>
+      {/* {props.mode === "vendor" ? (
+        <>
+          <button
+            onClick={() => {
+              handleEditProduct(_id);
+            }}
+            class="flex w-full justify-center rounded-md bg-indigo-600 my-2 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Edit
+          </button>
+        </>
+      ) : (
+        <></>
+      )} */}
     </Link>
   ) : (
     <div>

@@ -2,14 +2,22 @@ import { Inject, Injectable } from '@nestjs/common';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import mongoose, { Model } from 'mongoose';
 import { Cart } from './schema/cart.schema';
+import { ProductsService } from 'src/products/products.service';
 
 @Injectable()
 export class CartService {
   constructor(
+    private productsService: ProductsService,
+
     @Inject('CART_MODEL')
     private cartModel: Model<Cart>,
   ) {}
   async create(u_id: string, p_id: string) {
+    const isProductCreatedByUser =
+      await this.productsService.isProductCreatedByUser(u_id, p_id);
+    if (isProductCreatedByUser) {
+      return 'Vendor created this product';
+    }
     const res = new this.cartModel({
       u_id: new mongoose.Types.ObjectId(u_id),
       p_id: new mongoose.Types.ObjectId(p_id),
@@ -86,7 +94,7 @@ export class CartService {
         _id: res._id,
       });
     }
-    return `This action removes a # cart`;
+    return `This action removes a ${res._id} cart`;
   }
 
   async toggle(p_id: string, u_id: string) {

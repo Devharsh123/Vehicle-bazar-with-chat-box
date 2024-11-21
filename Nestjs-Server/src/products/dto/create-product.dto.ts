@@ -58,13 +58,23 @@ export class CreateProductDto {
 export class UpdateProductDto {
   @IsString()
   @IsOptional()
-  name: string;
+  kmDriven: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  price: number;
+  availableLocation: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  qty: number;
+  pricePerDay: string;
+
+  @IsEnum(TransactionType, {
+    message: 'Valid transactionType required',
+  })
+  @IsOptional()
+  transactionType: TransactionType;
+
+  @IsString()
+  @IsOptional()
+  registrationDescr: string;
 }

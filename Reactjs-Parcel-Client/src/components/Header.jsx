@@ -48,8 +48,11 @@ const Header = () => {
             </button>
           ) : (
             <>
-              <li className="px-4">
+              {/* <li className="px-4">
                 <Link to="/signup">Signup</Link>
+              </li> */}
+              <li className="px-4">
+                <Link to="/new-signup">Signup</Link>
               </li>
               <li className="px-4">
                 <Link to="/login">Login</Link>

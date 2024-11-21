@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { User } from 'src/users/interface/user.interface';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -11,6 +12,7 @@ export class UsersService {
     @Inject('USER_MODEL')
     private userModel: Model<User>,
   ) {}
+  saltOrRounds = 10;
 
   findAll(role?: 'INTERN' | 'ENGINEER' | 'ADMIN', age?: number) {
     // if (role) {
@@ -41,6 +43,7 @@ export class UsersService {
       email: rep.email,
       role: rep.role,
       password: rep.password,
+      verified: rep.isVerified,
     };
   }
 
@@ -63,8 +66,15 @@ export class UsersService {
     if (isUserExist) {
       throw new Error('Check your email: Email already exists');
     }
-    const createUser = new this.userModel(createUserDto);
-    createUser.save();
+    const hashPassword = await bcrypt.hash(
+      createUserDto.password,
+      this.saltOrRounds,
+    );
+    const createUser = new this.userModel({
+      ...createUserDto,
+      password: hashPassword,
+    });
+    await createUser.save();
 
     return {
       message: `User created succesfully`,

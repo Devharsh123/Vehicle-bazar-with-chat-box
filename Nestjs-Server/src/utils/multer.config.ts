@@ -1,4 +1,5 @@
 // multer.config.ts
+import { Injectable } from '@nestjs/common';
 import {
   MulterOptionsFactory,
   MulterModuleOptions,
@@ -7,6 +8,7 @@ import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { extname } from 'path';
 
+@Injectable()
 export class MulterConfigService implements MulterOptionsFactory {
   createMulterOptions(): MulterModuleOptions {
     return {

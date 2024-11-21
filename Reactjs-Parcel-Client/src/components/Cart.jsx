@@ -7,7 +7,7 @@ const Cart = () => {
   const navigate = useNavigate();
 
   const { token, data } = useLoadUsers();
-  const { cart, user } = useFetchCart(token);
+  const { cart, user, setCart } = useFetchCart(token);
 
   const [shippingDetails, setShippingDetails] = useState({});
   let [count, setCount] = useState(1);
@@ -43,6 +43,26 @@ const Cart = () => {
     setCount(count + 1);
   };
 
+  const handleRemoveCartItem = async (id) => {
+    const res = await fetch(`http://localhost:3000/cart/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    });
+    const json = await res.json();
+    console.log(json, "json");
+    if (json)
+      if (json) {
+        alertFunction();
+      }
+    function alertFunction() {
+      setCart({});
+      alert("Product added to cart");
+    }
+  };
+
   return (
     <div>
       <div class="font-sans max-w-6xl max-lg:max-w-2xl mx-auto bg-white p-4">
@@ -56,8 +76,8 @@ const Cart = () => {
                 <div class="flex items-center gap-4">
                   <div class="w-24 h-24 shrink-0 bg-white p-2 rounded-md">
                     <img
-                      src="https://readymadeui.com/images/product14.webp"
-                      class="w-full h-full object-contain"
+                      src={cart.imageUrl}
+                      class="w-full h-full object-fill"
                     />
                   </div>
 
@@ -111,6 +131,7 @@ const Cart = () => {
 
                       <div class="ml-auto">
                         <svg
+                          onClick={() => handleRemoveCartItem(cart._id)}
                           xmlns="http://www.w3.org/2000/svg"
                           class="w-4 fill-red-500 inline cursor-pointer"
                           viewBox="0 0 24 24"

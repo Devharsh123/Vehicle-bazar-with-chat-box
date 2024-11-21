@@ -8,12 +8,18 @@ import { TodoModule } from './todo/todo.module';
 import { CartModule } from './cart/cart.module';
 import { StripeModule } from './stripe/stripe.module';
 import { ChatModule } from './chat/chat.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
     ProductsModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'), // Serve files from the uploads directory
+      serveRoot: '/uploads', // URL prefix for static files
+    }),
     TodoModule,
     CartModule,
     StripeModule.forRootAsync(),

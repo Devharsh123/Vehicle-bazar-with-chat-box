@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useLoadUsers } from "../utils/useLoadUsers";
 
 const useAllVehicleDetails = (value, page, pageSize, search, filter) => {
+  console.log(value, "hook");
   const { token } = useLoadUsers();
   const [totalSize, setTotalSize] = useState(0);
   const [vehicleData, setVehicleData] = useState([]);
 
   useEffect(() => {
     fetchData();
-  }, [page, search, filter]);
+  }, [page, search, filter, value]);
 
   const fetchData = async () => {
     let url =

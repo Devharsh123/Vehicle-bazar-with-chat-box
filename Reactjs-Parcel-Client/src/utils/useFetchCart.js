@@ -16,6 +16,7 @@ const useFetchCart = (token) => {
       },
     });
     const json = await res.json();
+
     if (json.message === "Unauthorized" && json.statuscode === 401) {
       return { cart, user };
     }
@@ -27,7 +28,7 @@ const useFetchCart = (token) => {
     setUser(resJson.userDetail);
   };
 
-  return { cart, user };
+  return { cart, user, setCart };
 };
 
 export default useFetchCart;

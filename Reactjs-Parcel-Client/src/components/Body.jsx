@@ -6,9 +6,9 @@ import Filter from "./Filter";
 
 const Body = ({ values }) => {
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(12);
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("TORENT");
+  const [filter, setFilter] = useState("");
 
   const { totalSize, vehicleData } = useAllVehicleDetails(
     values,
@@ -29,7 +29,7 @@ const Body = ({ values }) => {
   return (
     <div>
       <div className="flex m-5 p-5 justify-center">
-        <Search list={vehicleData} onSearch={handleSearch} />
+        <Search onSearch={handleSearch} />
         <Filter onPurchaseModeChange={handleFilter} />
       </div>
       <div class="bg-white">
@@ -37,7 +37,11 @@ const Body = ({ values }) => {
           <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {vehicleData.length > 0 ? (
               vehicleData.map((detail) => (
-                <VehicleCard key={detail._id} vehicleDetail={detail} />
+                <VehicleCard
+                  key={detail._id}
+                  vehicleDetail={detail}
+                  mode={values}
+                />
               ))
             ) : (
               <p>No vehicles found</p>

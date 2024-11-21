@@ -1,15 +1,9 @@
 import { useState } from "react";
 
-const Search = ({ list, onSearch }) => {
+const Search = ({ onSearch }) => {
   const [searchText, setSearchText] = useState("");
   const handleSearch = () => {
-    const filteredText = searchText
-      ? list.filter((res) =>
-          res.model.toLowerCase().includes(searchText.toLowerCase())
-        )
-      : "";
-
-    onSearch(filteredText);
+    onSearch(searchText);
   };
   return (
     <div className="mr-5">

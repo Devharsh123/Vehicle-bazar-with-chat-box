@@ -9,7 +9,7 @@ const Profile = () => {
         <div>
           <img
             class="m-5 object-cover w-full rounded-t-lg rounded-b-lg h-96 md:h-auto md:w-48  md:rounded-s-lg"
-            src={require("../images/images-bkg.jpg")}
+            src={require("../assets/demo-avatar.avif")}
             alt="user-profile-image"
           />
           {data && data.role === "VENDOR" ? (
@@ -34,7 +34,7 @@ const Profile = () => {
             <strong> Description </strong>: Provided for base and good feel
           </p>
           <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            {data.verfied ? (
+            {data.verified ? (
               <>
                 <strong> Verified </strong>: ✅
               </>

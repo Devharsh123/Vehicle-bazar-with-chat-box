@@ -57,14 +57,14 @@ export class ProductsController {
     @Query('search') search: string,
     @Query('page') page: string,
     @Query('pageSize') pageSize: string,
-    @Query('sort') sort: 'TORENT' | 'TOBUY',
+    @Query('filter') filter: 'TORENT' | 'TOBUY',
   ): Promise<{ total: number; products: Product[] }> {
     return this.productsService.findVendorPr(
       req.user.id,
-      search,
       +page,
       +pageSize,
-      sort,
+      search,
+      filter,
     );
   }
 
@@ -73,9 +73,9 @@ export class ProductsController {
     @Query('search') search: string,
     @Query('page') page: string,
     @Query('pageSize') pageSize: string,
-    @Query('sort') filter: 'TORENT' | 'TOBUY',
+    @Query('filter') filter: 'TORENT' | 'TOBUY',
   ): Promise<{ total: number; products: Product[] }> {
-    return this.productsService.findAll(search, +page, +pageSize, filter);
+    return this.productsService.findAll(+page, +pageSize, search, filter);
   }
 
   @UseGuards(AuthGaurd)

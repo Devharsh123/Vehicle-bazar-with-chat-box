@@ -17,6 +17,10 @@ import Return from "./src/components/Return";
 import ProductDetails from "./src/components/ProductDetails";
 import Chat from "./src/components/Chat";
 import VendorChatBox from "./src/components/VendorChatBox";
+import Edit from "./src/components/EditProduct";
+import LatestSignUp from "./src/components/DemoSignUp/LatestSignUp";
+import VendorSignUp from "./src/components/SignUp/VendorSignUp";
+import DemoVendorSignUp from "./src/components/DemoSignUp/DemoVendorSignUp";
 
 const AppLayout = () => {
   return (
@@ -37,12 +41,15 @@ const appRouter = createBrowserRouter([
     children: [
       { path: "/", element: <Body /> },
       { path: "signup", element: <SignUp /> },
+      { path: "new-signup", element: <LatestSignUp /> },
+      // { path: "vendor-signup", element: <VendorSignUp /> },
+      { path: "demo-signup", element: <DemoVendorSignUp /> },
       { path: "login", element: <Login /> },
       { path: "about", element: <About /> },
       { path: "user-profile", element: <User /> },
       { path: "product-profile/:id", element: <ProductDetails /> },
       { path: "create", element: <Create /> },
-      { path: "update", element: <Create /> },
+      { path: "edit/:id", element: <Edit /> },
       { path: "cart", element: <Cart /> },
       { path: "chat/:id", element: <Chat /> },
       { path: "vendor-chat", element: <VendorChatBox /> },

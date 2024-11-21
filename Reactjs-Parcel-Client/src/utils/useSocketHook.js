@@ -7,7 +7,7 @@ const socket = io("http://localhost:3000", { autoConnect: false });
 
 const useSocketHook = (id, productId) => {
   const [inputValue, setInputValue] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messageList, setMessages] = useState([]);
   const { data } = useLoadUsers();
 
   useEffect(() => {
@@ -43,9 +43,9 @@ const useSocketHook = (id, productId) => {
       socket.off("messageHistory");
       socket.off("chat");
     };
-  }, []);
+  }, [data.id]);
 
-  console.log(messages, "messages");
+  console.log(messageList, "messages");
   const handleSendMessage = (e) => {
     console.log(e.key, "came value ->e");
     if (e.key !== "Enter" || inputValue.trim().length === 0) return;
@@ -61,7 +61,7 @@ const useSocketHook = (id, productId) => {
     setInputValue("");
   };
 
-  return { messages, inputValue, data, setInputValue, handleSendMessage };
+  return { messageList, inputValue, data, setInputValue, handleSendMessage };
 };
 
 export default useSocketHook;

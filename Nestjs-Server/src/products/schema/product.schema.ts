@@ -1,6 +1,4 @@
 import * as mongoose from 'mongoose';
-
-import { Document } from 'mongoose';
 import { Product } from '../interface/product.interface';
 
 export enum TransactionType {
@@ -18,7 +16,7 @@ export const ProductSchema = new mongoose.Schema<Product>(
     transactionType: {
       type: String,
       enum: TransactionType,
-      deafult: TransactionType.TORENT,
+      default: TransactionType.TORENT,
     },
     kmDriven: String,
     availableLocation: String,

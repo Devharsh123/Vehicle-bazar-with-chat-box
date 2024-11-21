@@ -5,6 +5,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { cartProviders } from './cart.providers';
 import { UsersModule } from 'src/users/users.module';
 import { ProductsModule } from 'src/products/products.module';
+import { ProductsService } from 'src/products/products.service';
 
 @Module({
   controllers: [CartController],

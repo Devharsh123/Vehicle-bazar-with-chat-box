@@ -9,15 +9,13 @@ const Chat = () => {
   const queryParams = new URLSearchParams(location.search);
   const productId = queryParams.get("productId");
 
-  const { messages, inputValue, data, setInputValue, handleSendMessage } =
+  const { messageList, inputValue, data, setInputValue, handleSendMessage } =
     useSocketHook(id, productId);
 
-  const conversation = messages
+  const conversation = messageList
     .flatMap((msg) => msg.messages)
     .filter((message) => message.senderId === id || message.receiverId === id)
     .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-
-  console.log(conversation, "conversation");
 
   return (
     <div className="flex">

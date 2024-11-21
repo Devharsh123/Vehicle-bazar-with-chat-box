@@ -32,7 +32,7 @@ export const UserSchema = new mongoose.Schema(
       enum: Role,
       default: Role.USER,
     },
-    isVerfied: {
+    isVerified: {
       type: Boolean,
       default: false,
     },
